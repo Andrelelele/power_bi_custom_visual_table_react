@@ -1,0 +1,47 @@
+{
+    "dataRoles": [
+        {
+            "displayName": "Measure Data",
+            "name": "measure",
+            "kind": "Measure"
+        }
+    ],
+    "objects": {
+        "table": {
+            "properties": {
+                "tableColor": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color" : true
+                            }
+                        }
+                    }
+                },
+                "fontFamily": {
+                    "displayName": "Font fontFamily",
+                    "type": {
+                        "formatting": {
+                            "fontFamily": true
+                        }
+                    }
+                }            
+            }
+        }
+    },
+    "dataViewMappings": [
+        {
+            "conditions": [
+                {
+                    "measure": {
+                    "max": 10
+                    }
+                }
+            ],
+            "single": {
+                "role": "measure"
+            }
+        }
+    ],
+    "privileges": []
+}
