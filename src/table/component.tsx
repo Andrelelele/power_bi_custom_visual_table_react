@@ -21,7 +21,7 @@ export const initialState: State = {
     },
 }
 
-export class ReactTable extends React.Component<{}, State> {
+export class ReactTable extends React.Component<State, State> {
     private static updateCallback: (data: object) => void = null;
 
     public static update(newState: State) {
@@ -45,11 +45,12 @@ export class ReactTable extends React.Component<{}, State> {
         ReactTable.updateCallback = null;
     }
 
-    constructor(props: any) {
+    constructor(props: State) {
         super(props);
-        this.state = initialState;
+        this.state = props;
     }
 
+    /*
     public renderColumns = () => {
         const extraColumns = ['Spalte 1', 'Spalte 2', 'Spalte 3'];        
 
@@ -61,6 +62,7 @@ export class ReactTable extends React.Component<{}, State> {
             </tr>
         );
     }
+    */
 
     render() {
         const {
@@ -114,14 +116,13 @@ export class ReactTable extends React.Component<{}, State> {
                             </th>
                             <th scope="col" className="px-6 py-4">
                                 <div className="flex items-center">
-                                    {textLabel} und {sizeOfMyArray}
+                                    {textLabel}
                                     <a href="#" />
                                     <svg className="w-3 h-3 ms-1.5" aria-hidden="true" fill="black" viewBox="0 0 24 24">
                                         <path d="M21.9,19.3l-9-15.6c-0.1-0.1-0.2-0.2-0.3-0.3c-0.5-0.3-1.1-0.2-1.4,0.3l-9,15.6C2,19.4,2,19.6,2,19.8c0,0.6,0.4,1,1,1h18c0.2,0,0.3,0,0.5-0.1C22,20.4,22.1,19.8,21.9,19.3z" />
                                     </svg>
                                 </div>
                             </th>
-                            {this.renderColumns()}
                         </tr>
                     </thead>
                     <tbody>

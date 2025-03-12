@@ -27,18 +27,19 @@ export default interface ViewModel {
 export class Visual implements IVisual {
     private target: HTMLElement;
     private reactRoot: React.ReactElement<any, any>;
+    private root: Root;
 
     private formattingSettings: VisualFormattingSettingsModel;
     private formattingSettingsService: FormattingSettingsService;
 
     constructor(options: VisualConstructorOptions) {
         this.formattingSettingsService = new FormattingSettingsService();
-        this.reactRoot = React.createElement(ReactTable, {});
+        this.reactRoot = React.createElement(ReactTable, initialState);
         this.target = options.element;
 
         const container: HTMLElement = this.target;
-        const root: Root = createRoot(container);
-        root.render(this.reactRoot);
+        this.root = createRoot(container);
+        this.root.render(this.reactRoot);
     }
 
     public update(options: VisualUpdateOptions) {
@@ -69,7 +70,7 @@ export class Visual implements IVisual {
 
             console.log("##### update!!!")
 
-            ReactTable.update({
+            const state = {
                 background: tableSettings?.tableColor.value.value,
                 fontFamily: tableSettings?.fontFamily.value,
                 textLabel: dataView.metadata.columns[0].displayName,
@@ -77,7 +78,12 @@ export class Visual implements IVisual {
                 myArray: dataView.metadata.columns,
                 sizeOfMyArray: arrayLength,
                 viewModel
-            });
+            };
+            this.reactRoot = React.createElement(ReactTable, state)
+            const container: HTMLElement = this.target;
+            this.root = createRoot(container);
+            this.root.unmount() 
+            this.root.render(this.reactRoot);
         } else {
             this.clear();
         }
